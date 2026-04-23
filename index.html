@@ -3,179 +3,173 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A Secret Message For you! 💌</title>
+  <title>A Confession... 💌</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:ital,wght@0,400;0,700;1,300&display=swap');
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Nunito', sans-serif;
-      background-color: #1a1a2e;
-      color: #fff;
+      background-color: #020617; /* Deep, dark night */
+      color: #f8fafc;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
-      transition: background 1.5s ease;
+      overflow-x: hidden;
+      transition: background 3s ease;
     }
 
-    .container { width: 100%; max-width: 420px; padding: 25px; text-align: center; }
+    .container { width: 100%; max-width: 450px; padding: 25px; text-align: center; }
 
-    /* --- Scene 1: Mystery Loader --- */
-    #loading h2 { font-size: 0.9rem; color: #ff85a2; letter-spacing: 5px; animation: pulse 0.8s infinite; }
-    @keyframes pulse { 50% { opacity: 0.1; } }
+    /* --- Scene 1: The Heartbeat Loading --- */
+    #loading h2 { font-size: 0.8rem; color: #e11d48; letter-spacing: 5px; animation: heartPulse 1.2s infinite; }
+    @keyframes heartPulse { 
+        0% { transform: scale(1); opacity: 0.8; } 
+        20% { transform: scale(1.1); opacity: 1; }
+        40% { transform: scale(1); opacity: 0.8; }
+    }
 
-    /* --- Scene 2: The Evidence Folder --- */
+    /* --- Scene 2: The Invitation --- */
     #secretBox {
       display: none;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 40px 25px;
+      border-radius: 40px;
+      border: 1px solid rgba(225, 29, 72, 0.3);
+      cursor: pointer;
+      animation: fadeIn 2s ease;
+    }
+
+    .click-text { font-size: 0.8rem; color: #94a3b8; margin-top: 20px; letter-spacing: 1px; }
+
+    /* --- Scene 3: The Intense Letter --- */
+    #finalLetter {
+      display: none;
+      text-align: left;
       background: #ffffff;
       color: #1e293b;
-      padding: 35px 25px;
+      padding: 40px 30px;
       border-radius: 30px;
-      box-shadow: 0 20px 60px rgba(255, 133, 162, 0.3);
-      cursor: pointer;
-      border: 4px solid #ff85a2;
-      animation: popIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 0 60px rgba(225, 29, 72, 0.5);
+      max-height: 85vh;
+      overflow-y: auto;
     }
 
-    .fact {
-      background: #fff5f7;
-      margin: 10px 0;
-      padding: 15px;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      border-left: 5px solid #ff85a2;
-      text-align: left;
-      animation: slideDown 0.4s forwards;
-      opacity: 0;
+    .letter-title { font-family: 'Pacifico', cursive; color: #e11d48; text-align: center; margin-bottom: 30px; font-size: 1.8rem; }
+    
+    .text-block { 
+        margin-bottom: 25px; 
+        line-height: 1.8; 
+        font-size: 1.05rem; 
+        opacity: 0; 
+        transform: translateY(20px); 
+        transition: all 1.5s ease;
     }
+    
+    .text-block.reveal { opacity: 1; transform: translateY(0); }
 
-    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .red-text { color: #e11d48; font-weight: 800; }
 
-    /* --- Scene 3: The Final Hopeful Message --- */
-    #finalVerdict {
-      display: none;
-      background: white;
-      color: #1e293b;
-      padding: 40px 25px;
-      border-radius: 30px;
-      border: 6px double #ff85a2;
-      animation: finalFade 1s ease;
-    }
-
-    #finalVerdict h2 { font-family: 'Pacifico', cursive; color: #ff4d7d; margin-bottom: 20px; }
-
-    .btn-reveal {
-      margin-top: 25px;
-      background: #ff4d7d;
+    #btnEnd {
+      margin-top: 30px;
+      background: #e11d48;
       color: white;
       border: none;
-      padding: 15px 35px;
+      padding: 15px 40px;
       border-radius: 50px;
       font-weight: 800;
       cursor: pointer;
       display: none;
+      width: 100%;
     }
 
-    @keyframes finalFade { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-    
-    .sparkle {
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .blood-drop {
       position: fixed;
       pointer-events: none;
       z-index: 100;
-      animation: rise 3s linear forwards;
+      animation: drop 4s linear forwards;
+      color: #e11d48;
     }
-    @keyframes rise { to { transform: translateY(-110vh); opacity: 0; } }
+    @keyframes drop {
+      0% { transform: translateY(-10vh); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(110vh); opacity: 0; }
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
     <div id="loading">
-      <h2>DECRYPTING SECRETS...</h2>
+      <h2>LISTENING TO MY HEARTBEAT...</h2>
     </div>
 
     <div id="secretBox">
-      <h3 style="color: #ff4d7d; margin-bottom: 5px;">Investigation Results 🔍</h3>
-      <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 20px;">(Click to reveal the heart data)</p>
-      <div id="factContainer"></div>
-      <button class="btn-reveal" id="btnVerdict">Show Final Result</button>
+      <h3 style="color: #e11d48; font-family: 'Pacifico'; font-size: 2rem;">Dear You...</h3>
+      <p class="click-text">I am afraid to show you this, but I can't keep it inside anymore. (Tap to open)</p>
     </div>
 
-    <div id="finalVerdict">
-      <h2>To My Special Person...</h2>
-      <p style="line-height: 1.8; font-size: 1.05rem;">
-        You are incredibly important to me. Even if you haven't said it yet, I feel it when we chat. 
-        <br><br>
-        No matter what happens, I am <b>always here for you</b> at any time. My only wish is for you to be happy and safe.
-        <br><br>
-        I’ll be waiting for the day you feel ready to tell me everything in your heart. <b>I’m looking forward to hearing it.</b>
-      </p>
-      <p style="margin-top: 25px; font-weight: 800; color: #ff4d7d;">This is my first gift to you. ❤️</p>
+    <div id="finalLetter">
+      <div class="letter-title">My Truth</div>
+      
+      <div class="text-block">There are so many things I keep locked inside because I am terrified I don’t know how to say them correctly.</div>
+      
+      <div class="text-block">Sometimes, when you don't respond for hours, <span class="red-text">it feels like the air leaves my lungs.</span> My heart feels heavy, and it hurts a little. I'm sorry if that sounds silly... but I wait for you more than I want to admit.</div>
+      
+      <div class="text-block">I often want to pick up the phone and call you just to hear your voice, but I stop myself every single time. <span class="red-text">I am so afraid that you will get bored of me</span> and leave me behind.</div>
+
+      <div class="text-block">I will never forget the first day you messaged me and called me <span class="red-text">"Dhoni."</span> You have no idea how much I love that name... my heart stops for a second every time you’re the one saying it.</div>
+
+      <div class="text-block">I don't know what place I have in your mind or your heart. It scares me not knowing. But whatever you feel, I hope you’ll share it with me soon. Please know that <span class="red-text">I could never be angry with you.</span></div>
+
+      <div class="text-block">I just want you to be safe. I want you to be careful. Above all, I want you to be happy—even if that happiness isn't with me. I am eagerly waiting for the day I finally see your name calling my phone.</div>
+      
+      <div class="text-block" style="text-align: center; font-weight: 800; font-size: 1.2rem; color: #e11d48;">I’m always here for you. No matter what. ❤️</div>
     </div>
   </div>
 
   <script>
-    const dataPoints = [
-      "Your messages make me smile like a fool. 😊",
-      "I’ll always try to be free for your free time. ⏳",
-      "Distance doesn't matter when you're this important. 🌏",
-      "I am always with you, whenever you need me. 🤝",
-      "Your happiness is my favorite thought. ✨"
-    ];
-
-    let count = 0;
     const loading = document.getElementById('loading');
     const secretBox = document.getElementById('secretBox');
-    const factContainer = document.getElementById('factContainer');
-    const btnVerdict = document.getElementById('btnVerdict');
-    const finalVerdict = document.getElementById('finalVerdict');
+    const finalLetter = document.getElementById('finalLetter');
+    const blocks = document.querySelectorAll('.text-block');
 
-    // Mystery Loader
+    // Mystery Intro
     setTimeout(() => {
       loading.style.display = 'none';
-      document.body.style.background = '#fff5f7'; 
       secretBox.style.display = 'block';
-    }, 2800);
+    }, 3000);
 
-    // Reveal one by one
+    // Opening the letter
     secretBox.addEventListener('click', () => {
-      if (count < dataPoints.length) {
-        const div = document.createElement('div');
-        div.className = 'fact';
-        div.innerText = dataPoints[count];
-        factContainer.appendChild(div);
-        count++;
-        
-        if (count === dataPoints.length) {
-          btnVerdict.style.display = 'inline-block';
-        }
-      }
-    });
-
-    // Final Reveal
-    btnVerdict.addEventListener('click', (e) => {
-      e.stopPropagation();
       secretBox.style.display = 'none';
-      finalVerdict.style.display = 'block';
-      document.body.style.background = '#ff4d7d';
-      
-      for(let i=0; i<50; i++) {
-        setTimeout(spawnSparkle, i * 60);
-      }
+      finalLetter.style.display = 'block';
+      document.body.style.background = '#450a0a'; // Dark blood red background
+
+      // Reveal blocks slowly
+      blocks.forEach((block, index) => {
+        setTimeout(() => {
+          block.classList.add('reveal');
+        }, index * 2000); // 2 seconds delay per block to make him read slowly
+      });
+
+      // Start the heartbeat animation on the letter itself
+      setInterval(spawnHeart, 500);
     });
 
-    function spawnSparkle() {
+    function spawnHeart() {
       const el = document.createElement('div');
-      el.className = 'sparkle';
-      el.innerText = ['💖', '✨', '🌸', '🤍', '💌'][Math.floor(Math.random() * 5)];
+      el.className = 'blood-drop';
+      el.innerText = ['❤️', '💓', '🥀', '✨'][Math.floor(Math.random() * 4)];
       el.style.left = Math.random() * 100 + 'vw';
-      el.style.top = '100vh';
       el.style.fontSize = Math.random() * 20 + 20 + 'px';
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 3000);
+      setTimeout(() => el.remove(), 4000);
     }
   </script>
 </body>
